@@ -60,6 +60,21 @@ export class Pipeline {
 
     return this;
   }
+
+  lookup(
+    from: string,
+    as: string,
+    localField: string,
+    foreignField: string,
+  ) {
+    const stage: PipelineStage = {
+      $lookup: { from, localField, foreignField, as },
+    };
+
+    this._pipeline.push(stage);
+
+    return this;
+  }
 }
 
 type MatchAttribute = { [key: string]: any };
@@ -68,6 +83,7 @@ type SortProperty = { [key: string]: 1 | -1 };
 
 type PipelineOperator =
   | "$match"
+  | "$lookup"
   | "$skip"
   | "$limit"
   | "$sort";
