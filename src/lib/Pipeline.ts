@@ -1,4 +1,4 @@
-import { StageError } from "./Errors";
+import ErrorCodes from "./errors/Errors";
 
 export class Pipeline {
   private _pipeline: PipelineStage[] = [];
@@ -15,11 +15,11 @@ export class Pipeline {
 
   skip(n: number) {
     if (!Number.isInteger(n)) {
-      throw new StageError("Only integer values are allowed.");
+      throw ErrorCodes.SKIP_ALLOWED_TYPE();
     }
 
     if (n < 0) {
-      throw new StageError("Only non negative integers are allowed.");
+      throw ErrorCodes.SKIP_ALLOWED_RANGE();
     }
 
     const stage = { $skip: n };
@@ -31,11 +31,11 @@ export class Pipeline {
 
   limit(n: number) {
     if (!Number.isInteger(n)) {
-      throw new StageError("Only integer values are allowed.");
+      throw ErrorCodes.LIMIT_ALLOWED_TYPE();
     }
 
     if (n < 0) {
-      throw new StageError("Only positive integers are allowed.");
+      throw ErrorCodes.LIMIT_ALLOWED_RANGE();
     }
 
     const stage = { $limit: n };
