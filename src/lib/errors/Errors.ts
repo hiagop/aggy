@@ -1,4 +1,4 @@
-export class StageError extends Error {
+class StageError extends Error {
   constructor(message?: string) {
     super(message);
   }
