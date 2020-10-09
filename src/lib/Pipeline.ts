@@ -9,6 +9,10 @@ export class Pipeline {
 
   constructor() {}
 
+  destroy() {
+    this._pipeline = [];
+  }
+
   skip(n: number) {
     if (!Number.isInteger(n)) {
       throw new StageError("Only integer values are allowed.");
@@ -61,12 +65,7 @@ export class Pipeline {
     return this;
   }
 
-  lookup(
-    from: string,
-    as: string,
-    localField: string,
-    foreignField: string,
-  ) {
+  lookup(from: string, as: string, localField: string, foreignField: string) {
     const stage: PipelineStage = {
       $lookup: { from, localField, foreignField, as },
     };
@@ -81,12 +80,7 @@ type MatchAttribute = { [key: string]: any };
 
 type SortProperty = { [key: string]: 1 | -1 };
 
-type PipelineOperator =
-  | "$match"
-  | "$lookup"
-  | "$skip"
-  | "$limit"
-  | "$sort";
+type PipelineOperator = "$match" | "$lookup" | "$skip" | "$limit" | "$sort";
 
 type PipelineStage = {
   [key in PipelineOperator]?: any;
